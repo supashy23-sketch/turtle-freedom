@@ -56,6 +56,6 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "littleTurtle.sln",
+    "dotnet.defaultSolution": "turtle-freedom.sln",
     "editor.acceptSuggestionOnCommitCharacter": false
 }

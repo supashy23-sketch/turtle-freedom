@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: ac5a09efbe41b8841b3aa44a2bd3aa4f
+guid: a72db4c3be87a204bac9a5dcd4650e20
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,7 +110,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: sprite_turtle_side_walk_0
+      name: sprite_turtle_side_walk_left_0
       rect:
         serializedVersion: 2
         x: 0
@@ -124,14 +124,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd30a503a3b36cc40bffcbce528d2da5
-      internalID: 687461892
+      spriteID: 2351c5775245f7f42be550755be3629b
+      internalID: 1414330792
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite_turtle_side_walk_1
+      name: sprite_turtle_side_walk_left_1
       rect:
         serializedVersion: 2
         x: 20
@@ -145,14 +145,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6008c2c7babf654439b219e582fbada0
-      internalID: 1109384482
+      spriteID: bd22b15221e533c418613e02991fa3e3
+      internalID: 1775724689
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite_turtle_side_walk_2
+      name: sprite_turtle_side_walk_left_2
       rect:
         serializedVersion: 2
         x: 40
@@ -166,14 +166,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0a800d39642250a46b4dba328b70622e
-      internalID: 449847296
+      spriteID: 7e40e9be0bce5cf47b9308e21c77a1c4
+      internalID: 802891033
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite_turtle_side_walk_3
+      name: sprite_turtle_side_walk_left_3
       rect:
         serializedVersion: 2
         x: 60
@@ -187,14 +187,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b6dadec2ff507bb408f6994e12357c5c
-      internalID: -10741967
+      spriteID: 7537bc50804fb0e43951de903d0d4e2e
+      internalID: -2024041129
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite_turtle_side_walk_4
+      name: sprite_turtle_side_walk_left_4
       rect:
         serializedVersion: 2
         x: 80
@@ -208,14 +208,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8e53bb7cbf2bccf44b5e22ea7df82564
-      internalID: 1020595984
+      spriteID: 52d1724571ef27f4895911bf21d38095
+      internalID: -2103458756
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite_turtle_side_walk_5
+      name: sprite_turtle_side_walk_left_5
       rect:
         serializedVersion: 2
         x: 100
@@ -229,14 +229,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fba43a7744c8c834586509af8ca66250
-      internalID: -389320834
+      spriteID: ed21e7368ceda964ea3537e6c08e7ff9
+      internalID: -434986316
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite_turtle_side_walk_6
+      name: sprite_turtle_side_walk_left_6
       rect:
         serializedVersion: 2
         x: 120
@@ -250,14 +250,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f8a720f7f5b0b73429f8062b8e06bb0d
-      internalID: -245037682
+      spriteID: 797a611e6d5b27344b78cb86c9d56523
+      internalID: -783294699
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: sprite_turtle_side_walk_7
+      name: sprite_turtle_side_walk_left_7
       rect:
         serializedVersion: 2
         x: 140
@@ -271,8 +271,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 623272eeb9f01ab4dad9a8b7d4d5db9e
-      internalID: -182776223
+      spriteID: 5bf3b1438d6b4a3479aec6c024b36da1
+      internalID: -999131112
       vertices: []
       indices: 
       edges: []
@@ -288,14 +288,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      sprite_turtle_side_walk_0: 687461892
-      sprite_turtle_side_walk_1: 1109384482
-      sprite_turtle_side_walk_2: 449847296
-      sprite_turtle_side_walk_3: -10741967
-      sprite_turtle_side_walk_4: 1020595984
-      sprite_turtle_side_walk_5: -389320834
-      sprite_turtle_side_walk_6: -245037682
-      sprite_turtle_side_walk_7: -182776223
+      sprite_turtle_side_walk_left_0: 1414330792
+      sprite_turtle_side_walk_left_1: 1775724689
+      sprite_turtle_side_walk_left_2: 802891033
+      sprite_turtle_side_walk_left_3: -2024041129
+      sprite_turtle_side_walk_left_4: -2103458756
+      sprite_turtle_side_walk_left_5: -434986316
+      sprite_turtle_side_walk_left_6: -783294699
+      sprite_turtle_side_walk_left_7: -999131112
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

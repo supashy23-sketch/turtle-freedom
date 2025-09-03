@@ -7,30 +7,31 @@ public class ScoreManager : MonoBehaviour
 
     public int score = 0;
     public float timeElapsed = 0f;
+    private bool isTiming = false; // คุมว่าจะนับเวลาไหม
 
     private void Awake()
     {
-        // ทำ Singleton
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // อยู่ข้ามซีน
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
-            Destroy(gameObject); // กันซ้ำ
+            Destroy(gameObject);
         }
     }
 
     private void Update()
     {
-        // นับเวลาในแต่ละซีน
-        timeElapsed += Time.deltaTime;
+        if (isTiming)
+        {
+            timeElapsed += Time.deltaTime;
+        }
     }
 
     private void OnEnable()
     {
-        // ฟัง event เมื่อเปลี่ยนซีน
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
@@ -41,9 +42,18 @@ public class ScoreManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == "Stage1")
+        if (scene.name == "Stage1") // ซีนเกมหลัก
         {
             ResetScoreAndTime();
+            StartTimer();
+        }
+        else if (scene.name == "EndScene") // ซีนจบ
+        {
+            StopTimer();
+        }
+        else // ซีนเมนูหลัก
+        {
+            StopTimer();
         }
     }
 
@@ -56,5 +66,16 @@ public class ScoreManager : MonoBehaviour
     {
         score = 0;
         timeElapsed = 0f;
+    }
+
+    public void StartTimer()
+    {
+        timeElapsed = 0f;
+        isTiming = true;
+    }
+
+    public void StopTimer()
+    {
+        isTiming = false;
     }
 }

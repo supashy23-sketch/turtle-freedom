@@ -50,8 +50,11 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
-
-        animator.SetBool("isMoving", isMoving);
+        if (animator != null)
+        {
+            animator.SetBool("isMoving", true); 
+        }
+        //animator.SetBool("isMoving", isMoving);
 
         if (Input.GetKeyDown(KeyCode.Z))
             Interact();

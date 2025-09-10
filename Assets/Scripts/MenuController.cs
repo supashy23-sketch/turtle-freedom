@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SceneChanger : MonoBehaviour
+public class MenuController : MonoBehaviour
 {
     [Header("ตั้งชื่อ Scene ที่ต้องการไป")]
     public string sceneName;
@@ -26,6 +26,11 @@ public class SceneChanger : MonoBehaviour
         {
             SceneManager.LoadScene(sceneName);
         }
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
     }
 }
 

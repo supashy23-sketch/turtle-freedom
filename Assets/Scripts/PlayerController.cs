@@ -5,12 +5,11 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public float moveSpeed = 5f;
-    public float gridSize = 1f;   // ขนาดของช่อง Grid (Tile Size)
+    public float gridSize = 1f;
 
     private bool isMoving;
     private Vector2 input;
-    private Vector2 lastDir;   // เก็บทิศทางล่าสุด
-
+    private Vector2 lastDir;
     private Animator animator;
 
     public LayerMask solidObjectsLayer;
@@ -26,50 +25,32 @@ public class PlayerController : MonoBehaviour
     {
         if (!isMoving)
         {
-            input.x = Input.GetAxisRaw("Horizontal");
-            input.y = Input.GetAxisRaw("Vertical");
-
-            // กันไม่ให้เดินทแยง
-            if (input.x != 0) input.y = 0;
+            // ตรวจจับการกดปุ่มทีละครั้ง (เพื่อให้เดินทีละช่อง)
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) input = Vector2.up;
+            else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) input = Vector2.down;
+            else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) input = Vector2.left;
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) input = Vector2.right;
+            else input = Vector2.zero;
 
             if (input != Vector2.zero)
             {
                 animator.SetFloat("moveX", input.x);
                 animator.SetFloat("moveY", input.y);
-
                 lastDir = input;
 
-                // คำนวณตำแหน่งเป้าหมายทีละ Grid
-                var targetPos = transform.position;
-                targetPos.x += input.x * gridSize;
-                targetPos.y += input.y * gridSize;
+                var targetPos = transform.position + new Vector3(input.x, input.y, 0f) * gridSize;
 
                 if (IsWalkable(targetPos))
-                {
                     StartCoroutine(Move(targetPos));
-                }
             }
         }
-        if (animator != null)
-        {
-            animator.SetBool("isMoving", true); 
-        }
-        //animator.SetBool("isMoving", isMoving);
 
+        // ตั้งค่าแอนิเมชัน
+        animator.SetBool("isMoving", isMoving);
+
+        // กด Z เพื่อ Interact
         if (Input.GetKeyDown(KeyCode.Z))
             Interact();
-    }
-
-    void Interact()
-    {
-        var facingDir = new Vector3(lastDir.x, lastDir.y);
-        var interactPos = transform.position + facingDir * gridSize;
-
-        var collider = Physics2D.OverlapCircle(interactPos, 0.2f, interactableLayer);
-        if (collider != null)
-        {
-            collider.GetComponent<Interactable>()?.Interact();
-        }
     }
 
     IEnumerator Move(Vector3 targetPos)
@@ -82,7 +63,7 @@ public class PlayerController : MonoBehaviour
             yield return null;
         }
 
-        // 🔥 Snap to Grid ให้ตรงกับ Tile Size
+        // Snap ตำแหน่งให้อยู่ตรงกลางช่อง Grid
         transform.position = new Vector3(
             Mathf.Round(transform.position.x / gridSize) * gridSize,
             Mathf.Round(transform.position.y / gridSize) * gridSize,
@@ -95,21 +76,25 @@ public class PlayerController : MonoBehaviour
 
     private bool IsWalkable(Vector3 targetPos)
     {
-        if (Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer | interactableLayer) != null)
-        {
-            return false;
-        }
-        return true;
+        return Physics2D.OverlapCircle(targetPos, 0.2f, solidObjectsLayer | interactableLayer) == null;
     }
 
     private void CheckForEncounters()
     {
-        if (Physics2D.OverlapCircle(transform.position, 0.2f, battleLayer) != null)
+        if (Physics2D.OverlapCircle(transform.position, 0.2f, battleLayer))
         {
             if (Random.Range(1, 101) <= 20)
-            {
                 Debug.Log("A battle has started!");
-            }
         }
+    }
+
+    void Interact()
+    {
+        var facingDir = new Vector3(lastDir.x, lastDir.y);
+        var interactPos = transform.position + facingDir * gridSize;
+
+        var collider = Physics2D.OverlapCircle(interactPos, 0.2f, interactableLayer);
+        if (collider != null)
+            collider.GetComponent<Interactable>()?.Interact();
     }
 }

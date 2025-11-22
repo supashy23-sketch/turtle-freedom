@@ -11,7 +11,7 @@ public class ScoreUI : MonoBehaviour
         if (ScoreManager.Instance != null)
         {
             scoreText.text = "Score: " + ScoreManager.Instance.score;
-            timeText.text = "Time: " + ScoreManager.Instance.timeElapsed.ToString("F2");
+            timeText.text = " " + ScoreManager.Instance.timeElapsed.ToString("F2");
         }
     }
 }

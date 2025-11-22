@@ -4,7 +4,6 @@ using System.Collections;
 public class ItemScore : MonoBehaviour
 {
     public int scoreValue = 10;
-    public AudioClip pickupSound;
 
     public float disappearDuration = 0.5f; // เวลาหมุนและหายไป
     public float rotationSpeed = 360f;     // ความเร็วหมุน (องศาต่อวินาที)
@@ -39,9 +38,9 @@ public class ItemScore : MonoBehaviour
 
     private IEnumerator PlaySoundAndDisappear()
     {
-        // เล่นเสียง
-        if (pickupSound != null)
-            audioSource.PlayOneShot(pickupSound);
+        // เล่นเสียงจาก AudioSource ที่กำหนดใน Inspector
+        if (audioSource != null)
+            audioSource.Play();
 
         float elapsed = 0f;
         Vector3 originalScale = transform.localScale;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -7,7 +8,10 @@ public class ScoreManager : MonoBehaviour
 
     public int score = 0;
     public float timeElapsed = 0f;
-    private bool isTiming = false; // คุมว่าจะนับเวลาไหม
+    public int inputCount = 0;      // ตัวแปรนับการกด WASD + Space
+    private bool isTiming = false;
+
+    public Text inputCountText;      // UI แสดงจำนวนการกด (ลาก Text ลง Inspector)
 
     private void Awake()
     {
@@ -27,6 +31,10 @@ public class ScoreManager : MonoBehaviour
         if (isTiming)
         {
             timeElapsed += Time.deltaTime;
+
+            // อัปเดต UI ถ้ามี
+            if (inputCountText != null)
+                inputCountText.text = $"Inputs: {inputCount}";
         }
     }
 
@@ -47,14 +55,17 @@ public class ScoreManager : MonoBehaviour
             ResetScoreAndTime();
             StartTimer();
         }
-        else if (scene.name == "EndScene") // ซีนจบ
+        else if (scene.name == "EndScene")
         {
             StopTimer();
         }
-        else // ซีนเมนูหลัก
+        else
         {
             StopTimer();
         }
+
+        // ลองเช็คว่าในซีนมี Text UI หรือไม่
+        inputCountText = FindObjectOfType<Text>(); // หรือจะหาเฉพาะชื่อ Text ก็ได้
     }
 
     public void AddScore(int value)
@@ -62,10 +73,16 @@ public class ScoreManager : MonoBehaviour
         score += value;
     }
 
+    public void AddInputCount()
+    {
+        inputCount++;
+    }
+
     public void ResetScoreAndTime()
     {
         score = 0;
         timeElapsed = 0f;
+        inputCount = 0;
     }
 
     public void StartTimer()

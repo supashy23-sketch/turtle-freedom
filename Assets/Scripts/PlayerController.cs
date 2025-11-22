@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
+    private Vector3 previousPosition;
+    private Coroutine moveRoutine;
+    private Coroutine dashRoutine;
     public GameObject footstepPrefab;     // Prefab รอยเท้า
     public AudioClip footstepSound;       // เสียงเดิน
     private AudioSource audioSource;
@@ -18,7 +20,7 @@ public class PlayerController : MonoBehaviour
 
     private bool isMoving;
     private Vector2 input;
-    private Vector2 lastDir;
+    public Vector2 lastDir;
     private Animator animator;
 
     public float dashDistanceMultiplier = 3f;       // ระยะพุ่ง = gridSize * 3
@@ -40,6 +42,17 @@ public class PlayerController : MonoBehaviour
 
     public void HandleUpdate()
     {
+        Vector3 delta = transform.position - previousPosition;
+
+        if (delta.sqrMagnitude > 0.0001f)
+        {
+            if (Mathf.Abs(delta.x) > Mathf.Abs(delta.y))
+                lastDir = new Vector2(Mathf.Sign(delta.x), 0);
+            else
+                lastDir = new Vector2(0, Mathf.Sign(delta.y));
+        }
+
+        previousPosition = transform.position;
         // อัปเดต UI และตัวจับเวลา
         if (dashCooldownTimer > 0f)
         {
@@ -53,12 +66,15 @@ public class PlayerController : MonoBehaviour
 
         if (!isMoving)
         {
-            // ตรวจการเดินปกติ
-            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) input = Vector2.up;
-            else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) input = Vector2.down;
-            else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) input = Vector2.left;
-            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) input = Vector2.right;
+            bool moved = false;
+            if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W)) { input = Vector2.up; moved = true; }
+            else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S)) { input = Vector2.down; moved = true; }
+            else if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A)) { input = Vector2.left; moved = true; }
+            else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D)) { input = Vector2.right; moved = true; }
             else input = Vector2.zero;
+
+            if (moved && ScoreManager.Instance != null)
+                ScoreManager.Instance.AddInputCount();  // เพิ่ม count การกดปุ่มเดิน
 
             if (input != Vector2.zero)
             {
@@ -68,13 +84,15 @@ public class PlayerController : MonoBehaviour
 
                 var targetPos = transform.position + new Vector3(input.x, input.y, 0f) * gridSize;
                 if (IsWalkable(targetPos))
-                    StartCoroutine(Move(targetPos));
+                    moveRoutine = StartCoroutine(Move(targetPos));
             }
 
-            // กด space เพื่อ Dash
+            // Dash
             if (Input.GetKeyDown(KeyCode.Space) && dashCooldownTimer <= 0f)
             {
-                StartCoroutine(Dash());
+                if (ScoreManager.Instance != null)
+                    ScoreManager.Instance.AddInputCount();  // เพิ่ม count การกด Space
+                dashRoutine = StartCoroutine(Dash());
             }
         }
 
@@ -200,11 +218,25 @@ public class PlayerController : MonoBehaviour
         Destroy(foot, 3f);
     }
 
+    
+
     public void ForceStopMovement()
     {
-        StopAllCoroutines();
+        if (moveRoutine != null)
+        {
+            StopCoroutine(moveRoutine);
+            moveRoutine = null;
+        }
+
+        if (dashRoutine != null)
+        {
+            StopCoroutine(dashRoutine);
+            dashRoutine = null;
+        }
+
         isMoving = false;
     }
+
     
 
 

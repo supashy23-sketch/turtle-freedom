@@ -11,7 +11,7 @@ public class EnemyPatrolTopDown : MonoBehaviour
 
     private int currentWaypointIndex = 0;
     private bool isWaiting = false;
-
+    public float originalSpeed;
     public string sceneName;
 
     void Start()
@@ -21,7 +21,11 @@ public class EnemyPatrolTopDown : MonoBehaviour
         StartCoroutine(Patrol());
       }
     }
-
+    void Awake()
+      {
+          originalSpeed = speed;
+          EnemyManager.Instance.RegisterEnemy(this);
+      }
     IEnumerator Patrol()
     {
       while (true)
@@ -65,5 +69,15 @@ public class EnemyPatrolTopDown : MonoBehaviour
             SceneManager.LoadScene(sceneName);
         }
     }
+
+    
+
+  
+
+  private void OnDestroy()
+  {
+      if (EnemyManager.Instance != null)
+          EnemyManager.Instance.UnregisterEnemy(this);
+  }
     
 }

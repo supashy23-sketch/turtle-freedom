@@ -199,6 +199,12 @@ public class PlayerController : MonoBehaviour
 
         Destroy(foot, 3f);
     }
+
+    public void ForceStopMovement()
+    {
+        StopAllCoroutines();
+        isMoving = false;
+    }
     
 
 
